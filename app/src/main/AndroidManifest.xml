@@ -3,6 +3,7 @@
     package="com.example.posnew">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera2" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.POSNEW">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".Register"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".ActivityFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,14 +29,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".widget.StockWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/stock_widget_info" />
         </receiver>
+
         <service
             android:name=".widget.StockWidgetService"
             android:exported="false"

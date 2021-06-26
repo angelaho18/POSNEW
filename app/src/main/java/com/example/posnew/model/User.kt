@@ -1,8 +1,9 @@
-package com.example.pointofsale.model
+package com.example.posnew.model
 import android.text.TextUtils
 import android.util.Patterns
 
-class User (override val fullname:String, override val email:String, override  val password:String):UserInterface {
+class User (override val fullname:String, override val email:String, override  val password:String):
+    UserInterface {
     override fun isvalid(): Int {
         if(TextUtils.isEmpty(fullname))
             return 3
