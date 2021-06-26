@@ -11,7 +11,7 @@ const val EXTRA_STOK = "EXTRA_STOCK"
 const val EXTRA_DATA = "EXTRA_DATA"
 const val EXTRA_RELOAD = "RELOAD"
 const val EXTRA_ITEM = "ITEM"
-const val EXTRA_AD = "AD"
+var EXTRA_SCAN = "HASIL SCAN"
 
 const val PREF_NAME = "ad-remove"
 

@@ -14,12 +14,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Switch
 import android.widget.Toast
 import androidx.core.content.edit
 import com.example.posnew.ActivityFragment
-import com.example.posnew.EXTRA_AD
-import com.example.posnew.PREF_NAME
 import com.example.posnew.R
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.File
@@ -37,8 +34,6 @@ class Profile : Fragment() {
 
     private val prefFileName = "MyFilepref1"
     private var i = 0
-    private lateinit var adSharePref: SharedPreferences
-    var check = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,19 +57,6 @@ class Profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        adSharePref = context?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)!!
-        check = adSharePref?.getBoolean("ad", false)
-
-        val switch = view.findViewById<Switch>(R.id.switchAd)
-
-        switch.isChecked = check
-        switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            adSharePref.edit {
-                putBoolean("ad", isChecked)
-                apply()
-            }
-        }
 
         val btnPic = view.findViewById<Button>(R.id.buttonPic)
         btnPic.setOnClickListener {
@@ -136,7 +118,6 @@ class Profile : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(EXTRA_AD, check)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {

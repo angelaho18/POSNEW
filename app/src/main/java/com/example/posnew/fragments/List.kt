@@ -39,12 +39,6 @@ import java.io.IOException
 import java.io.InputStream
 import com.example.posnew.R
 import com.example.posnew.Room.ProductAdapter
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -131,8 +125,6 @@ class List : Fragment() {
             dialog.show()
             var hasil = ""
 
-            val adSharePref = context?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-            var removeAd = adSharePref?.getBoolean("ad", false)
             confirmBtn.setOnClickListener {
                 doAsync {
                     try {
