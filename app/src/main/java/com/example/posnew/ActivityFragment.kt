@@ -23,8 +23,8 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home1 -> newTransaction(Home())
-                R.id.income1 -> newTransaction(Income())
                 R.id.list1 -> newTransaction(List())
+                R.id.cart1 -> newTransaction(Cart())
                 R.id.person1 -> newTransaction(Profile())
             }
             true

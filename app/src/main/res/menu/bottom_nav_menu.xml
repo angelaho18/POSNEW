@@ -3,17 +3,17 @@
     <item android:id="@+id/home1"
         android:title="home"
         android:icon="@drawable/icon_home" />
-    <item android:id="@+id/income1"
-        android:title="supplier"
-        android:icon="@drawable/icon_income"/>
+    <item android:id="@+id/list1"
+        android:title="list"
+        android:icon="@drawable/icon_list"/>
 <!--        android:title="income"-->
 
     <item android:id="@+id/placeHolder"
         android:title="" />
 
-    <item android:id="@+id/list1"
-        android:title="list"
-        android:icon="@drawable/icon_list"/>
+    <item android:id="@+id/cart1"
+        android:title="cart"
+        android:icon="@drawable/icon_cart"/>
 
     <item android:id="@+id/person1"
         android:title="person"
