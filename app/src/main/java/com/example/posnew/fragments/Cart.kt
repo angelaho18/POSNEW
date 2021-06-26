@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.posnew.EXTRA_SCAN
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.posnew.CartAdapter
+import com.example.posnew.CartItem
 import com.example.posnew.R
 import kotlinx.android.synthetic.main.fragment_cart.*
 
@@ -15,6 +18,11 @@ private const val ARG_PARAM2 = "param2"
 class Cart : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var cartAdapter : CartAdapter
+    private var ItemProduk : MutableList<CartItem> = mutableListOf(
+        CartItem("Dress",200000,"https://i.ibb.co/wBYDxLq/beach.jpg",2),
+        CartItem("Dress",200000,"https://i.ibb.co/wBYDxLq/beach.jpg",2)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +36,15 @@ class Cart : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        hasilScan.text= EXTRA_SCAN
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+        //hasilScan.text= EXTRA_SCAN
+        val view = inflater.inflate(R.layout.fragment_cart, container, false)
+        val RecyclerViewCart = view.findViewById<RecyclerView>(R.id.RecyclerViewCart)
+
+        cartAdapter = CartAdapter(ItemProduk)
+        RecyclerViewCart.adapter = cartAdapter
+        RecyclerViewCart.layoutManager= LinearLayoutManager(context)
+
+        return view
     }
 
     companion object {
