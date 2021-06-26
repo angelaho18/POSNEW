@@ -9,8 +9,8 @@ import android.os.SystemClock
 import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import com.example.pointofsale.Room.Product
-import com.example.pointofsale.Room.ProductDBHelper
+import com.example.posnew.Room.Product
+import com.example.posnew.Room.ProductDBHelper
 import com.example.posnew.EXTRA_ITEM
 import com.example.posnew.R
 import kotlinx.android.synthetic.main.stock_widget.view.*
