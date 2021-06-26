@@ -63,19 +63,6 @@ class Profile : Fragment() {
     ): View? {
         var view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        adSharePref = context?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)!!
-        check = adSharePref?.getBoolean("ad", false)
-
-        val switch = view.findViewById<Switch>(R.id.switchAd)
-
-        switch.isChecked = check
-        switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            adSharePref.edit {
-                putBoolean("ad", isChecked)
-                apply()
-            }
-        }
-
         val btnPic = view.findViewById<Button>(R.id.buttonPic)
         btnPic.setOnClickListener {
             val takePicIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
