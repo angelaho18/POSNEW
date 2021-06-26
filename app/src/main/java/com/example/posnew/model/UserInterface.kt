@@ -1,4 +1,4 @@
-package com.example.pointofsale.model
+package com.example.posnew.model
 
 interface UserInterface {
     val fullname:String
