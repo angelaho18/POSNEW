@@ -3,9 +3,7 @@
     package="com.example.posnew">
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera2" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE " />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -22,8 +20,8 @@
         android:theme="@style/Theme.POSNEW">
         <activity android:name=".Login"></activity>
         <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ActivityFragment">
+        <activity android:name=".ActivityFragment" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

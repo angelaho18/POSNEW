@@ -44,12 +44,10 @@ class Login : AppCompatActivity() {
                 logPass.error = "Password must Not be Empty"
             } else{
                 if(logMail.text.isEmailValid()){
-//                        val intentAF = Intent(this, ActivityFragment::class.java)
                     if(soundID != 0){
                         sp?.play(soundID, 0.99f, .99f, 1, 0, .99f)
                     }
                     auth()
-//                        startActivity(intentAF)
                 }else{
                     logMail.error = "email is not valid"
                 }

@@ -56,6 +56,7 @@ class List : Fragment() {
     private lateinit var ShimmerView: ShimmerFrameLayout
     private val vm: ProductViewModel by viewModels()
     private val SELECT_PICTURE = 1
+    private val SCAN_BARCODE = 2
     private var selectedImagePath: String? = null
     private lateinit var imageSource: String
     private var inputData: ByteArray? = null
@@ -127,7 +128,8 @@ class List : Fragment() {
 
             Barcodeid.setOnClickListener {
                 run {
-                    IntentIntegrator(requireActivity()).initiateScan();
+                    IntentIntegrator.forSupportFragment(this)
+                        .setRequestCode(SCAN_BARCODE).initiateScan()
                 }
             }
 
@@ -160,16 +162,20 @@ class List : Fragment() {
                 }
                 dialog.dismiss()
             }
+            cancelBtn.setOnClickListener {
+                dialog.dismiss()
+            }
         }
-
         return view
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Log.d(TAG, "onActivityResult: $requestCode")
         if (resultCode === Activity.RESULT_OK) {
             if (requestCode === SELECT_PICTURE) {
                 val selectedImageUri: Uri? = data!!.data
                 selectedImagePath = getPath(selectedImageUri)
-                Log.d(ContentValues.TAG, "onActivityResult: $selectedImagePath")
+                Log.d(TAG, "onActivityResult: $selectedImagePath")
                 filename = selectedImagePath?.substring(selectedImagePath?.lastIndexOf(
                         "/")!! + 1)
                 val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
@@ -179,28 +185,31 @@ class List : Fragment() {
                 if(data != null){
                     imageSource = selectedImageUri.toString()
                     var inputStream = context?.contentResolver?.openInputStream(selectedImageUri!!)
-                    Log.d(ContentValues.TAG, "onActivityResult: imagesource $imageSource")
+                    Log.d(TAG, "onActivityResult: imagesource $imageSource")
                 }
             }
-
-        }
-
-        val idbarang = view?.findViewById<TextView>(R.id.barcodeID)
-        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        Log.i(TAG, "onActivityResult: ${result}")
-        if(result != null){
-            if(result.contents != null){
+//            else if (requestCode === SCAN_BARCODE){
+                Log.d(TAG, "onActivityResult: Heyyy")
+                val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
+                val idbarang = view.findViewById<TextView>(R.id.barcodeID)
+                var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+                Log.i(TAG, "onActivityResult: ${result}")
+                if(result != null){
+                    if(result.contents != null){
 //                idbarang?.setText(result.contents)
-                scannedResult = result.contents
-                idbarang?.text = scannedResult
-                Log.i(TAG, "onActivityResult: ${result.contents}")
-            } else {
-                idbarang?.text = "scan failed"
-                Log.i(TAG, "onActivityResult: ${result.contents}")
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-            Log.i(TAG, "onActivityResult: nulll")
+                        scannedResult = result.contents
+                        idbarang.text = scannedResult
+                        Log.i(TAG, "onActivityResult: ${result.contents}")
+                    } else {
+                        idbarang.text = "scan failed"
+                        Log.i(TAG, "onActivityResult: ${result.contents}")
+                    }
+                } else {
+                    super.onActivityResult(requestCode, resultCode, data)
+                    Log.i(TAG, "onActivityResult: nulll")
+                }
+//            }
+            Log.d(TAG, "onActivityResult: Whatt")
         }
     }
 

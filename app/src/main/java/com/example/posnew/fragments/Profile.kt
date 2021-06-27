@@ -3,7 +3,6 @@ package com.example.posnew.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,8 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.edit
-import com.example.posnew.ActivityFragment
+import com.example.posnew.Login
 import com.example.posnew.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -64,7 +62,7 @@ class Profile : Fragment() {
         val outBtn = view.findViewById<Button>(R.id.LogoutBut)
         outBtn.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            val intentIn = Intent(context, ActivityFragment::class.java)
+            val intentIn = Intent(context, Login::class.java)
             startActivity(intentIn)
         }
 
