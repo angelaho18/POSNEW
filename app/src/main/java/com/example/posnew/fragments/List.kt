@@ -146,6 +146,9 @@ class List : Fragment() {
                 }
                 dialog.dismiss()
             }
+            cancelBtn.setOnClickListener{
+                dialog.cancel()
+            }
         }
 
         return view

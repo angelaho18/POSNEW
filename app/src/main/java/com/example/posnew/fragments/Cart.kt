@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.posnew.CartAdapter
 import com.example.posnew.CartItem
+import com.example.posnew.EXTRA_SUM
 import com.example.posnew.R
 import kotlinx.android.synthetic.main.fragment_cart.*
 
@@ -24,7 +25,7 @@ class Cart : Fragment() {
     private lateinit var cartAdapter : CartAdapter
     private var ItemProduk : MutableList<CartItem> = mutableListOf(
         CartItem("Dress",200000,"https://i.ibb.co/wBYDxLq/beach.jpg",1),
-        CartItem("Dress",200000,"https://i.ibb.co/wBYDxLq/beach.jpg",1)
+        CartItem("Shirt",100000,"https://i.ibb.co/wBYDxLq/beach.jpg",1)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +49,12 @@ class Cart : Fragment() {
         RecyclerViewCart.adapter = cartAdapter
         RecyclerViewCart.layoutManager= LinearLayoutManager(context)
 
-//        var totalHarga = 0
-//        for (i in ItemProduk){
-//            totalHarga += ItemProduk.get(i).Harga
-//        }
+        var totalHarga = 0
+        for (i in 0 until ItemProduk.size){
+            totalHarga += (ItemProduk[i].Harga) * (ItemProduk[i].JumlahProduk)
+        }
+
+        totalPrice.setText(totalHarga.toString())
 
         return view
     }
