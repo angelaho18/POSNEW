@@ -91,6 +91,34 @@
                 android:textColor="@color/black" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BarcodeID : "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/bt_AddID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan barcode ID"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/barcodeID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="id"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +134,7 @@
                 android:text="Cancel"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:layout_marginRight="30dp"/>
+                android:layout_marginRight="20dp"/>
 
             <android.widget.Button
                 android:id="@+id/bt_add_to_conf"
