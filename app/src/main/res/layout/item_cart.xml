@@ -122,7 +122,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@color/transparent"
-                        android:src="@drawable/ic_delete"/>
+                        android:src="@drawable/ic_delete"
+                        android:id="@+id/delete"/>
 
                 </LinearLayout>
 

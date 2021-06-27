@@ -86,7 +86,8 @@
                         android:text="-"
                         android:textSize="17sp"
                         android:textStyle="bold"
-                        android:textColor="@color/blue"/>
+                        android:textColor="@color/blue"
+                        android:id="@+id/totalPrice"/>
 
                 </LinearLayout>
 
@@ -95,7 +96,7 @@
             <android.widget.Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Checkout"
+                android:text="Pay"
                 android:textColor="@color/white"
                 android:background="@drawable/cart_checkout_button"
                 android:textAllCaps="false"/>
