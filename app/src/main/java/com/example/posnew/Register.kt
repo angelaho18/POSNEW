@@ -100,20 +100,20 @@ class Register : AppCompatActivity(), regisviewInterface {
             progressDialog.show()
 
             saveToRtDb(name, email, pass)
-//            auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
-//                if (it.isSuccessful) {
-//                    firebaseUser = it.result?.user!!
-//                    progressDialog.dismiss()
-//                    sendUserToActivity(firebaseUser, email)
-//                    Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
-//
-//                    saveToRtDb(name, email, pass)
-//                }
-//                else{
-//                    progressDialog.dismiss()
-//                    Toast.makeText(this, "Registrasi Gagal ${it.exception}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
+            auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    firebaseUser = it.result?.user!!
+                    progressDialog.dismiss()
+                    sendUserToActivity(firebaseUser, email)
+                    Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+
+                    saveToRtDb(name, email, pass)
+                }
+                else{
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "Registrasi Gagal ${it.exception}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }else{
             password.error = "Password must at least 6 character"
         }

@@ -29,21 +29,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.posnew.EXTRA_SCAN
+import com.example.posnew.*
 import com.example.posnew.Room.Product
 import com.example.posnew.Room.ProductViewModel
-import com.example.posnew.ItemView
-import com.example.posnew.PREF_NAME
 import com.facebook.shimmer.ShimmerFrameLayout
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
-import com.example.posnew.R
 import com.example.posnew.Room.ProductAdapter
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import kotlinx.android.synthetic.main.alert_dialog_stock.view.*
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -56,15 +54,12 @@ class List : Fragment() {
     private lateinit var ShimmerView: ShimmerFrameLayout
     private val vm: ProductViewModel by viewModels()
     private val SELECT_PICTURE = 1
-    private val SCAN_BARCODE = 2
     private var selectedImagePath: String? = null
     private lateinit var imageSource: String
     private var inputData: ByteArray? = null
     var filename: String? = ""
     private lateinit var notificationManager: NotificationManagerCompat
 
-    lateinit var dialog: AlertDialog
-    lateinit var service: Intent
     var JobSchedulerId = 5
     var query: String? = ""
 
@@ -75,6 +70,9 @@ class List : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
+    lateinit var dialog: AlertDialog
+    lateinit var service: Intent
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +91,50 @@ class List : Fragment() {
             ShimmerView.stopShimmer()
             ShimmerView.visibility = View.GONE
         }, 3000)
+
+        service = Intent(context, ServiceStock::class.java)
+        Handler().postDelayed({
+            var arrayStock = ArrayList<String>()
+            vm.getAllData().observe(viewLifecycleOwner, Observer {
+                for (item in it) {
+                    if (item.Quantity <= 5) {
+                        arrayStock.add(item.ProductName)
+                    }
+                }
+            })
+
+            var hsl = ""
+            for (i in arrayStock) {
+                if (i == arrayStock.last()) {
+                    hsl += i
+                    hsl += ""
+                } else {
+                    hsl += i
+                    hsl += "\n"
+                }
+            }
+            if (hsl != null) {
+                val views = View.inflate(context, R.layout.alert_dialog_stock, null)
+                val builder = AlertDialog.Builder(context)
+                builder.setView(views)
+
+                views.listBarang.setText(hsl)
+
+                dialog = builder.create()
+                if (startService) {
+                    dialog.show()
+                    requireActivity().startService(service)
+                }
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+                dialog.setCancelable(false)
+                var alertStockBut = views.findViewById<Button>(R.id.alertStockBut)
+                alertStockBut.setOnClickListener {
+                    requireActivity().stopService(service)
+                    dialog.dismiss()
+                    startService = false
+                }
+            }
+        }, 5000L)
 
         val productRecyclerView = view.findViewById<RecyclerView>(R.id.productRecyclerView)
 
@@ -118,8 +160,12 @@ class List : Fragment() {
                 val intent = Intent()
                 intent.type = "image/*"
                 intent.action = Intent.ACTION_OPEN_DOCUMENT
-                startActivityForResult(Intent.createChooser(intent,
-                        "Select Picture"), SELECT_PICTURE)
+                startActivityForResult(
+                    Intent.createChooser(
+                        intent,
+                        "Select Picture"
+                    ), SELECT_PICTURE
+                )
                 val imgFileName = addView.findViewById<TextView>(R.id.image_file_name)
                 imgFileName.text = filename
             }
@@ -174,27 +220,28 @@ class List : Fragment() {
             if (requestCode === SELECT_PICTURE) {
                 val selectedImageUri: Uri? = data!!.data
                 selectedImagePath = getPath(selectedImageUri)
-                Log.d(TAG, "onActivityResult: $selectedImagePath")
+                Log.d(ContentValues.TAG, "onActivityResult: $selectedImagePath")
                 filename = selectedImagePath?.substring(selectedImagePath?.lastIndexOf(
                         "/")!! + 1)
                 val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
                 val imgFileName = view.findViewById<TextView>(R.id.image_file_name)
                 imgFileName.text = filename
 
-                if(data != null){
+                if (data != null) {
                     imageSource = selectedImageUri.toString()
                     var inputStream = context?.contentResolver?.openInputStream(selectedImageUri!!)
-                    Log.d(TAG, "onActivityResult: imagesource $imageSource")
+                    Log.d(ContentValues.TAG, "onActivityResult: imagesource $imageSource")
                 }
             }
         }
 
 
         val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
-        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        var result: IntentResult? =
+            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         Log.i(TAG, "onActivityResult: ${result}")
-        if(result != null){
-            if(result.contents != null){
+        if (result != null) {
+            if (result.contents != null) {
                 scannedResult = result.contents
                 Log.i(TAG, "onActivityResult: ${result.contents}")
             } else {
@@ -226,7 +273,6 @@ class List : Fragment() {
 //            idbarang?.text = scannedResult
 //        }
 //    }
-
 
 
     @Throws(IOException::class)
