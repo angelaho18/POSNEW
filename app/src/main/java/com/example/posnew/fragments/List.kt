@@ -60,8 +60,6 @@ class List : Fragment() {
     var filename: String? = ""
     private lateinit var notificationManager: NotificationManagerCompat
 
-    lateinit var dialog: AlertDialog
-    lateinit var service: Intent
     var JobSchedulerId = 5
     var query: String? = ""
 
