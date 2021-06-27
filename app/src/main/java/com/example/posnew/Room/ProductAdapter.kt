@@ -30,6 +30,7 @@ class ProductAdapter(private val query: String?, private val db: ProductViewMode
         val Price = view.findViewById<TextView>(R.id.price)
         val row = view.findViewById<LinearLayout>(R.id.row)
         val ProductImg = view.findViewById<ImageView>(R.id.GambarProduk)
+        val barcodeid = view.findViewById<TextView>(R.id.barcode)
         val mMenu = view.findViewById<ImageView>(R.id.mMenus)
 
         fun popupMenus(view: View, item: Product, db: ProductViewModel) {
@@ -93,6 +94,7 @@ class ProductAdapter(private val query: String?, private val db: ProductViewMode
         var item = items[position]
         holder.ProductName.text = item.ProductName
         holder.Quantity.text = item.Quantity.toString()
+        holder.barcodeid.text = item.BarcodeID
         if (!found) found = holder.changeColor(item, query)
 
         holder.Price.text = rupiah(item.Price)

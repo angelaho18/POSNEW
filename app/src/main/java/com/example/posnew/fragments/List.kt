@@ -147,6 +147,7 @@ class List : Fragment() {
                         productTmp.Quantity = qty.text.toString().toInt()
                         productTmp.Price = price.text.toString().toInt()
                         productTmp.ProductPic = imageSource
+                        productTmp.BarcodeID = scannedResult
                         vm.insert(productTmp)
 
                         var data = vm.getAllData()

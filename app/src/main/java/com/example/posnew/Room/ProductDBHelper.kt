@@ -47,6 +47,7 @@ abstract class ProductDBHelper : RoomDatabase() {
                         Runnable() {
                             var product = Product()
                             product.ProductName = "Hulala"
+                            product.BarcodeID = "0123"
                             product.Quantity = 1
                             product.Price = 5000
                             productDao().insertAll(product)
