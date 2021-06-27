@@ -24,7 +24,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_register.*
 import java.io.File
 
-
 class Register : AppCompatActivity(), regisviewInterface {
 
     private lateinit var regispresenter: regispresenterInterface
@@ -99,21 +98,21 @@ class Register : AppCompatActivity(), regisviewInterface {
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
 
-            saveToRtDb(name, email, pass)
-//            auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
-//                if (it.isSuccessful) {
-//                    firebaseUser = it.result?.user!!
-//                    progressDialog.dismiss()
-//                    sendUserToActivity(firebaseUser, email)
-//                    Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
-//
-//                    saveToRtDb(name, email, pass)
-//                }
-//                else{
-//                    progressDialog.dismiss()
-//                    Toast.makeText(this, "Registrasi Gagal ${it.exception}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
+//            saveToRtDb(name, email, pass)
+            auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    firebaseUser = it.result?.user!!
+                    progressDialog.dismiss()
+                    sendUserToActivity(firebaseUser, email)
+                    Toast.makeText(this, "Registrasi Berhasil", Toast.LENGTH_SHORT).show()
+
+                    saveToRtDb(name, email, pass)
+                }
+                else{
+                    progressDialog.dismiss()
+                    Toast.makeText(this, "Registrasi Gagal ${it.exception}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }else{
             password.error = "Password must at least 6 character"
         }
@@ -127,7 +126,10 @@ class Register : AppCompatActivity(), regisviewInterface {
         hashMap["email"] = email
         hashMap["password"] = pass
 
-        databaseReference.child("users")
+        Log.d("Firebase RTDB", "saveToRtDb: db $databaseReference")
+        Log.d("Firebase RTDB", "saveToRtDb: db $hashMap")
+
+        databaseReference.child("Users")
             .child(firebaseUser.uid)
             .setValue(hashMap)
             .addOnSuccessListener {

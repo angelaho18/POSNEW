@@ -1,62 +1,34 @@
 {
   "project_info": {
-    "project_number": "1004039136145",
-    "project_id": "point-of-sale-5fd55",
-    "storage_bucket": "point-of-sale-5fd55.appspot.com"
+    "project_number": "389547590774",
+    "firebase_url": "https://point-of-sale-77694-default-rtdb.firebaseio.com",
+    "project_id": "point-of-sale-77694",
+    "storage_bucket": "point-of-sale-77694.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1004039136145:android:90b0c0bf6b929a6f647030",
-        "android_client_info": {
-          "package_name": "com.example.pointofsale"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1004039136145-p8nia3ck2p76o98300jlfo50mdu8cnbm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCepXI8i1rgh19W4hqseqzScBmI22K4RJ8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1004039136145-p8nia3ck2p76o98300jlfo50mdu8cnbm.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1004039136145:android:6461d123af2208a7647030",
+        "mobilesdk_app_id": "1:389547590774:android:617f3e31acb32b48ca4b57",
         "android_client_info": {
           "package_name": "com.example.posnew"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1004039136145-p8nia3ck2p76o98300jlfo50mdu8cnbm.apps.googleusercontent.com",
+          "client_id": "389547590774-406i2gv6n4pmgfb60k8b2mi15la56r84.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCepXI8i1rgh19W4hqseqzScBmI22K4RJ8"
+          "current_key": "AIzaSyDPMqSpLALKz3P7Igszc62pMA7gNXlczXQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1004039136145-p8nia3ck2p76o98300jlfo50mdu8cnbm.apps.googleusercontent.com",
+              "client_id": "389547590774-406i2gv6n4pmgfb60k8b2mi15la56r84.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

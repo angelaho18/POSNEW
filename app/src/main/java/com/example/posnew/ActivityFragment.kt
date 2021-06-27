@@ -4,7 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.example.posnew.Room.ProductViewModel
 import com.example.posnew.fragments.*
 import com.example.posnew.fragments.List
 import com.google.zxing.integration.android.IntentIntegrator
@@ -13,6 +17,7 @@ import kotlinx.android.synthetic.main.bottom_navigation.*
 
 class ActivityFragment : AppCompatActivity(), InterfaceFragment {
     var scannedResult: String = ""
+    private val vm: ProductViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,7 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
             run {
                 IntentIntegrator(this).initiateScan();
             }
+
             bottomNavigationView.menu.findItem(R.id.cart1).isChecked = true
             newTransaction(Cart())
         }
