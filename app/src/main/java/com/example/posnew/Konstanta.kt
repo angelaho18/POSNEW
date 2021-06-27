@@ -12,6 +12,7 @@ const val EXTRA_DATA = "EXTRA_DATA"
 const val EXTRA_RELOAD = "RELOAD"
 const val EXTRA_ITEM = "ITEM"
 var EXTRA_SCAN = "HASIL SCAN"
+var EXTRA_SUM = 0
 
 const val PREF_NAME = "ad-remove"
 

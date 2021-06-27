@@ -128,8 +128,7 @@ class List : Fragment() {
 
             Barcodeid.setOnClickListener {
                 run {
-                    IntentIntegrator.forSupportFragment(this)
-                        .setRequestCode(SCAN_BARCODE).initiateScan()
+                    IntentIntegrator.forSupportFragment(this).initiateScan()
                 }
             }
 
@@ -149,6 +148,7 @@ class List : Fragment() {
                         productTmp.Quantity = qty.text.toString().toInt()
                         productTmp.Price = price.text.toString().toInt()
                         productTmp.ProductPic = imageSource
+                        productTmp.BarcodeID = scannedResult
                         vm.insert(productTmp)
 
                         var data = vm.getAllData()
@@ -170,7 +170,6 @@ class List : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d(TAG, "onActivityResult: $requestCode")
         if (resultCode === Activity.RESULT_OK) {
             if (requestCode === SELECT_PICTURE) {
                 val selectedImageUri: Uri? = data!!.data
@@ -188,28 +187,23 @@ class List : Fragment() {
                     Log.d(TAG, "onActivityResult: imagesource $imageSource")
                 }
             }
-//            else if (requestCode === SCAN_BARCODE){
-                Log.d(TAG, "onActivityResult: Heyyy")
-                val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
-                val idbarang = view.findViewById<TextView>(R.id.barcodeID)
-                var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-                Log.i(TAG, "onActivityResult: ${result}")
-                if(result != null){
-                    if(result.contents != null){
-//                idbarang?.setText(result.contents)
-                        scannedResult = result.contents
-                        idbarang.text = scannedResult
-                        Log.i(TAG, "onActivityResult: ${result.contents}")
-                    } else {
-                        idbarang.text = "scan failed"
-                        Log.i(TAG, "onActivityResult: ${result.contents}")
-                    }
-                } else {
-                    super.onActivityResult(requestCode, resultCode, data)
-                    Log.i(TAG, "onActivityResult: nulll")
-                }
-//            }
-            Log.d(TAG, "onActivityResult: Whatt")
+
+        }
+
+
+        val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
+        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        Log.i(TAG, "onActivityResult: ${result}")
+        if(result != null){
+            if(result.contents != null){
+                scannedResult = result.contents
+                Log.i(TAG, "onActivityResult: ${result.contents}")
+            } else {
+                Log.i(TAG, "onActivityResult: ${result.contents}")
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+            Log.i(TAG, "onActivityResult: nulll")
         }
     }
 
@@ -221,9 +215,7 @@ class List : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.let {
-            val idbarang = view?.findViewById<TextView>(R.id.barcodeID)
             scannedResult = it.getString("scannedResult").toString()
-            idbarang?.text = scannedResult
         }
     }
 //    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
