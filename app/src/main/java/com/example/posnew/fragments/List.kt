@@ -15,6 +15,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.PersistableBundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
@@ -59,7 +60,8 @@ class List : Fragment() {
     var filename: String? = ""
     private lateinit var notificationManager: NotificationManagerCompat
 
-
+    lateinit var dialog: AlertDialog
+    lateinit var service: Intent
     var JobSchedulerId = 5
     var query: String? = ""
 
@@ -208,8 +210,10 @@ class List : Fragment() {
                 }
                 dialog.dismiss()
             }
+            cancelBtn.setOnClickListener {
+                dialog.dismiss()
+            }
         }
-
         return view
     }
 
@@ -219,11 +223,8 @@ class List : Fragment() {
                 val selectedImageUri: Uri? = data!!.data
                 selectedImagePath = getPath(selectedImageUri)
                 Log.d(ContentValues.TAG, "onActivityResult: $selectedImagePath")
-                filename = selectedImagePath?.substring(
-                    selectedImagePath?.lastIndexOf(
-                        "/"
-                    )!! + 1
-                )
+                filename = selectedImagePath?.substring(selectedImagePath?.lastIndexOf(
+                        "/")!! + 1)
                 val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
                 val imgFileName = view.findViewById<TextView>(R.id.image_file_name)
                 imgFileName.text = filename
@@ -298,11 +299,9 @@ class List : Fragment() {
         val id = fileId.split(":".toRegex()).toTypedArray()[1]
         val column = arrayOf(MediaStore.Images.Media.DATA)
         val selector = MediaStore.Images.Media._ID + "=?"
-        val cursor = context?.contentResolver?.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            column, selector, arrayOf(id), null
-        )
-        if (cursor != null) {
+        val cursor = context?.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                column, selector, arrayOf(id), null)
+        if (cursor != null){
             val columnIndex = cursor?.getColumnIndex(column[0])
             if (cursor.moveToFirst()) {
                 filePath = cursor.getString(columnIndex)
@@ -317,10 +316,8 @@ class List : Fragment() {
         var img = img
         while (img?.size!! > 500000) {
             val bitmap: Bitmap = BitmapFactory.decodeByteArray(img, 0, img!!.size)
-            val resized = Bitmap.createScaledBitmap(
-                bitmap,
-                (bitmap.width * 0.8).toInt(), (bitmap.height * 0.8).toInt(), true
-            )
+            val resized = Bitmap.createScaledBitmap(bitmap,
+                    (bitmap.width * 0.8).toInt(), (bitmap.height * 0.8).toInt(), true)
             val stream = ByteArrayOutputStream()
             resized.compress(Bitmap.CompressFormat.PNG, 100, stream)
             img = stream.toByteArray()
@@ -361,6 +358,4 @@ class List : Fragment() {
                 }
             }
     }
-
-
 }

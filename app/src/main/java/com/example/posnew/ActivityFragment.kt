@@ -37,6 +37,8 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
             run {
                 IntentIntegrator(this).initiateScan();
             }
+            bottomNavigationView.menu.findItem(R.id.cart1).isChecked = true
+            newTransaction(Cart())
         }
 
         var openNotif = intent.getBooleanExtra(EXTRA_NOTIF, false)

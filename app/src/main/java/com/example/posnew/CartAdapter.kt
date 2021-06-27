@@ -34,7 +34,8 @@ class CartAdapter(data : MutableList<CartItem>): RecyclerView.Adapter<CartAdapte
 
     override fun onBindViewHolder(holder: myHolder, position: Int) {
 
-        var count = holder.jumlahProduk.text.toString().toInt()
+        var count = myData.get(position).JumlahProduk
+
         holder.tambah.setOnClickListener{
             count = count + 1
             holder.jumlahProduk.setText(""+count)
@@ -53,9 +54,11 @@ class CartAdapter(data : MutableList<CartItem>): RecyclerView.Adapter<CartAdapte
             }
         }
 
-        holder.hapus.setOnClickListener{
-            myData.removeAt(position)
-            notifyDataSetChanged()
+        holder.hapus.setOnClickListener {
+            var newPosition = holder.adapterPosition
+            myData.removeAt(newPosition)
+            notifyItemRemoved(newPosition);
+            notifyItemRangeChanged(newPosition, myData.size);
         }
 
         holder.NamaProduk.setText(myData.get(position).NamaProduk)
