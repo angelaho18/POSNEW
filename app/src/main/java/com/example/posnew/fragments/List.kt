@@ -6,6 +6,7 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -14,6 +15,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.PersistableBundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
@@ -27,6 +29,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.posnew.EXTRA_SCAN
 import com.example.posnew.Room.Product
 import com.example.posnew.Room.ProductViewModel
 import com.example.posnew.ItemView
@@ -39,6 +42,8 @@ import java.io.IOException
 import java.io.InputStream
 import com.example.posnew.R
 import com.example.posnew.Room.ProductAdapter
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -46,6 +51,7 @@ private const val ARG_PARAM2 = "param2"
 class List : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
+    var scannedResult: String = ""
 
     private lateinit var ShimmerView: ShimmerFrameLayout
     private val vm: ProductViewModel by viewModels()
@@ -117,6 +123,14 @@ class List : Fragment() {
                 imgFileName.text = filename
             }
 
+            val Barcodeid = addView.findViewById<Button>(R.id.bt_AddID)
+
+            Barcodeid.setOnClickListener {
+                run {
+                    IntentIntegrator.forSupportFragment(this).initiateScan()
+                }
+            }
+
             val confirmBtn = addView.findViewById<Button>(R.id.bt_add_to_conf)
             val cancelBtn = addView.findViewById<Button>(R.id.bt_cancel)
             val name = addView.findViewById<EditText>(R.id.inputName)
@@ -133,6 +147,7 @@ class List : Fragment() {
                         productTmp.Quantity = qty.text.toString().toInt()
                         productTmp.Price = price.text.toString().toInt()
                         productTmp.ProductPic = imageSource
+                        productTmp.BarcodeID = scannedResult
                         vm.insert(productTmp)
 
                         var data = vm.getAllData()
@@ -173,7 +188,46 @@ class List : Fragment() {
             }
 
         }
+
+
+        val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
+        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        Log.i(TAG, "onActivityResult: ${result}")
+        if(result != null){
+            if(result.contents != null){
+                scannedResult = result.contents
+                Log.i(TAG, "onActivityResult: ${result.contents}")
+            } else {
+                Log.i(TAG, "onActivityResult: ${result.contents}")
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+            Log.i(TAG, "onActivityResult: nulll")
+        }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState?.putString("scannedResult", scannedResult)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            scannedResult = it.getString("scannedResult").toString()
+        }
+    }
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//       onRestoreInstanceState(savedInstanceState)
+//
+//        savedInstanceState?.let {
+//            val idbarang = view?.findViewById<TextView>(R.id.barcodeID)
+//            scannedResult = it.getString("scannedResult").toString()
+//            idbarang?.text = scannedResult
+//        }
+//    }
+
+
 
     @Throws(IOException::class)
     fun getBytes(inputStream: InputStream): ByteArray? {
