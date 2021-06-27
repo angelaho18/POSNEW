@@ -14,10 +14,14 @@
         android:queryHint="Search..."
         android:iconifiedByDefault="false"/>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerViewHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="right">
-    </LinearLayout>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="60dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </RelativeLayout>
