@@ -15,7 +15,6 @@ import com.example.posnew.EXTRA_SUM
 import com.example.posnew.R
 import kotlinx.android.synthetic.main.fragment_cart.*
 
-
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 

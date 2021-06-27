@@ -56,6 +56,7 @@ class List : Fragment() {
     private lateinit var ShimmerView: ShimmerFrameLayout
     private val vm: ProductViewModel by viewModels()
     private val SELECT_PICTURE = 1
+    private val SCAN_BARCODE = 2
     private var selectedImagePath: String? = null
     private lateinit var imageSource: String
     private var inputData: ByteArray? = null
@@ -161,19 +162,19 @@ class List : Fragment() {
                 }
                 dialog.dismiss()
             }
-            cancelBtn.setOnClickListener{
-                dialog.cancel()
+            cancelBtn.setOnClickListener {
+                dialog.dismiss()
             }
         }
-
         return view
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode === Activity.RESULT_OK) {
             if (requestCode === SELECT_PICTURE) {
                 val selectedImageUri: Uri? = data!!.data
                 selectedImagePath = getPath(selectedImageUri)
-                Log.d(ContentValues.TAG, "onActivityResult: $selectedImagePath")
+                Log.d(TAG, "onActivityResult: $selectedImagePath")
                 filename = selectedImagePath?.substring(selectedImagePath?.lastIndexOf(
                         "/")!! + 1)
                 val view = layoutInflater.inflate(R.layout.layout_pop_up, null, true)
@@ -183,7 +184,7 @@ class List : Fragment() {
                 if(data != null){
                     imageSource = selectedImageUri.toString()
                     var inputStream = context?.contentResolver?.openInputStream(selectedImageUri!!)
-                    Log.d(ContentValues.TAG, "onActivityResult: imagesource $imageSource")
+                    Log.d(TAG, "onActivityResult: imagesource $imageSource")
                 }
             }
 
@@ -309,6 +310,4 @@ class List : Fragment() {
                 }
             }
     }
-
-
 }
