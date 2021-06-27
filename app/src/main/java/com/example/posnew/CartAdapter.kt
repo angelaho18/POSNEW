@@ -4,6 +4,8 @@ import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,10 @@ class CartAdapter(data : MutableList<CartItem>): RecyclerView.Adapter<CartAdapte
         val NamaProduk = itemView.findViewById<TextView>(R.id.NamaProduk)
         val Harga = itemView.findViewById<TextView>(R.id.harga)
         val Jumlah = itemView.findViewById<TextView>(R.id.jumlahProduk)
+        val tambah = itemView.findViewById<Button>(R.id.addCart)
+        val kurang = itemView.findViewById<Button>(R.id.reduceCart)
+        val jumlahProduk = itemView.findViewById<TextView>(R.id.jumlahProduk)
+        val hapus = itemView.findViewById<ImageButton>(R.id.delete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myHolder {
@@ -28,8 +34,32 @@ class CartAdapter(data : MutableList<CartItem>): RecyclerView.Adapter<CartAdapte
 
     override fun onBindViewHolder(holder: myHolder, position: Int) {
 
+        var count = holder.jumlahProduk.text.toString().toInt()
+        holder.tambah.setOnClickListener{
+            count = count + 1
+            holder.jumlahProduk.setText(""+count)
+            holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
+        }
+
+        holder.kurang.setOnClickListener{
+            if(count == 1){
+                holder.jumlahProduk.setText("1")
+                holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
+            }
+            else{
+                count -= 1
+                holder.jumlahProduk.setText(""+count)
+                holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
+            }
+        }
+
+        holder.hapus.setOnClickListener{
+            myData.removeAt(position)
+            notifyDataSetChanged()
+        }
+
         holder.NamaProduk.setText(myData.get(position).NamaProduk)
-        holder.Harga.setText(myData.get(position).Harga.toString())
+        holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
         holder.Jumlah.setText(myData.get(position).JumlahProduk.toString())
         Picasso.get().load(myData.get(position).GambarProduk).into(holder.GambarProduk)
     }
