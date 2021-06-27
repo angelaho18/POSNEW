@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.core.content.edit
 import com.example.posnew.ActivityFragment
 import com.example.posnew.R
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.File
 import java.io.FileNotFoundException
@@ -31,10 +32,6 @@ private const val REQUEST_CODE = 18
 class Profile : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-
-    private val prefFileName = "MyFilepref1"
-    private var i = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +63,7 @@ class Profile : Fragment() {
 
         val outBtn = view.findViewById<Button>(R.id.LogoutBut)
         outBtn.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
             val intentIn = Intent(context, ActivityFragment::class.java)
             startActivity(intentIn)
         }
@@ -116,17 +114,6 @@ class Profile : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
