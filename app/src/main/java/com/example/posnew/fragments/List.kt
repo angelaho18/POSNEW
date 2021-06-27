@@ -113,7 +113,7 @@ class List : Fragment() {
                     hsl += "\n"
                 }
             }
-            if (hsl != null) {
+            if (hsl !== "") {
                 val views = View.inflate(context, R.layout.alert_dialog_stock, null)
                 val builder = AlertDialog.Builder(context)
                 builder.setView(views)
