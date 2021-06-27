@@ -187,7 +187,6 @@ class List : Fragment() {
                     Log.d(TAG, "onActivityResult: imagesource $imageSource")
                 }
             }
-
         }
 
 
