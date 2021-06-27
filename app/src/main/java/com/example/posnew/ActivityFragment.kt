@@ -56,7 +56,7 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
             vm.getAllData().observe(this, Observer {
                 for (i in 0 until it.size){
                     if(it[i].BarcodeID === scannedResult){
-
+                        
                     }
                     else{
                         val builder = AlertDialog.Builder(this)

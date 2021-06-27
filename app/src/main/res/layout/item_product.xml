@@ -97,15 +97,6 @@
                     android:textStyle="bold"
                     android:text="Barcode ID : "
                     android:layout_weight="2"/>
-                <TextView
-                    android:id="@+id/barcode"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/blue"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:layout_weight="3"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -116,14 +107,31 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <ImageButton
-                android:id="@+id/mMenus"
-                android:layout_width="40dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_more"
-                android:background="@color/white"/>
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp">
+                <TextView
+                    android:id="@+id/barcode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/blue"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="coba"
+                    android:layout_weight="2"/>
+
+                <ImageButton
+                    android:id="@+id/mMenus"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_more"
+                    android:background="@color/white"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -28,9 +28,9 @@
 
         <activity android:name=".Login"></activity>
         <activity android:name=".Register" />
-        <activity android:name=".ActivityFragment"
+        <activity android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".ActivityFragment">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
