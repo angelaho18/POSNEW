@@ -17,8 +17,11 @@ import com.example.posnew.CartItem
 import com.example.posnew.PREF_NAME
 import com.example.posnew.R
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.io.File
 import java.io.FileWriter
+import java.lang.reflect.Type
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -52,25 +55,37 @@ class Cart : Fragment() {
         val RecyclerViewCart = view.findViewById<RecyclerView>(R.id.RecyclerViewCart)
         var totalPrice = view.findViewById<TextView>(R.id.totalPrice)
 
-//        val gson = Gson()
-//
-//        cartSharedPref = context?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)!!
-//        var getJson = cartSharedPref.getString("cart", "")
-//        var obj = gson.fromJson(getJson, CartItem::class.java)
-//        cartData.addAll(obj)
+        val gson = Gson()
+
+        cartSharedPref = context?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)!!
+        var getJson = cartSharedPref.getString("cart", "")
+        if(getJson != ""){
+            val type: Type = object : TypeToken<ArrayList<CartItem?>?>() {}.type
+            var obj = gson.fromJson<ArrayList<CartItem>>(getJson, type)
+            cartData.addAll(obj)
+        }
 
         var item = arguments?.getParcelable<CartItem>("item")
         Log.d("cart", "onCreateView: $item")
-        cartData.add(item!!)
-//        var jsonString = gson.toJson(cartData)
-//        cartSharedPref.edit {
-//            putString("cart", jsonString)
-//            apply()
-//        }
+        if(item != null){
+            cartData.add(item!!)
+            var jsonString = gson.toJson(cartData)
+            cartSharedPref.edit {
+                putString("cart", jsonString)
+                apply()
+            }
+        }
 
         cartAdapter = CartAdapter(cartData)
         RecyclerViewCart.adapter = cartAdapter
         RecyclerViewCart.layoutManager= LinearLayoutManager(context)
+
+        var total = 0
+        for (i in cartData){
+            total += i.Harga
+        }
+        val totalHarga  = view.findViewById<TextView>(R.id.totalPrice)
+        totalHarga.text = total.toString()
 
 //        var totalHarga = 0
 //        for (i in 0 until ItemProduk.size){
@@ -80,22 +95,6 @@ class Cart : Fragment() {
 //        totalPrice.setText(totalHarga.toString())
 
         return view
-    }
-
-    fun writeFileOnInternalStorage(context: Context, filename: String?, body: String?) {
-        val dir = File(context.filesDir, "CartItem")
-        if (!dir.exists()) {
-            dir.mkdir()
-        }
-        try {
-            val gpxfile = File(dir, filename)
-            val writer = FileWriter(gpxfile)
-            writer.append(body)
-            writer.flush()
-            writer.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
     }
 
     companion object {

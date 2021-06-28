@@ -1,5 +1,6 @@
 package com.example.posnew
 
+import android.content.Context
 import android.media.Image
 import android.net.Uri
 import android.view.LayoutInflater
@@ -10,10 +11,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 
 class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.myHolder>() {
     private var myData = data
+
     class myHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val GambarProduk = itemView.findViewById<ImageView>(R.id.GambarProduk)
         val NamaProduk = itemView.findViewById<TextView>(R.id.NamaProduk)
@@ -37,6 +40,7 @@ class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.
 
         val data = myData[position]
         var count = data.JumlahProduk
+        val gson = Gson()
 
         holder.tambah.setOnClickListener{
             count += 1
@@ -52,7 +56,7 @@ class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.
             else{
                 count -= 1
                 holder.jumlahProduk.text = ""+count
-                holder.Harga.setText(data.Harga.toString().toInt()*count)
+                holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
             }
         }
 

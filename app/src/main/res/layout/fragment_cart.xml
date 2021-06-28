@@ -30,42 +30,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RecyclerViewCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:layout_weight="1"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:layout_weight="1">
+            android:paddingRight="15dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:background="@drawable/bottom_cart_round_shape"
             android:orientation="horizontal"
             android:paddingTop="15dp"
             android:paddingBottom="60dp"
-            android:layout_gravity="end"
             android:weightSum="5">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="4.5">
+                android:layout_marginLeft="20dp"
+                android:layout_weight="4.5"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total "/>
+                    android:text="Total " />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -75,19 +75,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rp. "
+                        android:textColor="@color/blue"
                         android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/blue"/>
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/totalPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="-"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
                         android:textColor="@color/blue"
-                        android:id="@+id/totalPrice"/>
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -96,10 +96,10 @@
             <android.widget.Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pay"
-                android:textColor="@color/white"
                 android:background="@drawable/cart_checkout_button"
-                android:textAllCaps="false"/>
+                android:text="Pay"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

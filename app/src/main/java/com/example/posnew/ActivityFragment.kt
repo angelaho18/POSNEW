@@ -105,7 +105,7 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
                 Log.d("scan", "onCreate: scan $scannedResult")
                 if (i.BarcodeID == scannedResult) {
                     Log.d("scan", "onCreate: bar ${i.BarcodeID}")
-                    item = (CartItem(i.ProductName, i.ProductPic, i.Price, i.Quantity))
+                    item = (CartItem(i.ProductName, i.ProductPic, i.Price, 1))
                     Log.d("cart", "onScan: list $item")
                     exist = true
                     val cartIntent = Intent(this, ActivityFragment::class.java)
