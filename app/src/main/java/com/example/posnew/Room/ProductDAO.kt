@@ -25,6 +25,9 @@ interface ProductDAO {
 
     @Query("Select * from Product where PRODUCT_QTY <= 5 order by PRODUCT_QTY asc")
     fun getDataForWidget(): List<Product>
+
+    @Query("Select * from Product")
+    fun getData(): List<Product>
 }
 //abstract class ProductDAO {
 ////    @Transaction

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,12 +23,17 @@ import com.example.posnew.fragments.List
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import kotlinx.android.synthetic.main.bottom_navigation.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class ActivityFragment : AppCompatActivity(), InterfaceFragment {
-    var scannedResult: String = ""
     private val vm: ProductViewModel by viewModels()
+    private lateinit var builder: AlertDialog.Builder
+    private var scannedResult: String = ""
+    var exist = false
+    var onScanClick = false
 
-    private lateinit var cartAdapter : CartAdapter
+    private lateinit var cartAdapter: CartAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,62 +54,76 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
             }
             true
         }
-        scan.setOnClickListener {
-            run {
-                IntentIntegrator(this).initiateScan();
-            }
-
-            vm.getAllData().observe(this, Observer {
-                for (i in 0 until it.size){
-                    if(it[i].BarcodeID === scannedResult){
-                        
-                    }
-                    else{
-                        val builder = AlertDialog.Builder(this)
-                        builder.setTitle("Barcode Scan")
-                        builder.setMessage("Data not found, please add the item first at list")
-                        //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
-
-                        builder.setPositiveButton("Add Item") { dialog, which ->
-                            bottomNavigationView.menu.findItem(R.id.list1).isChecked = true
-                            newTransaction(List())
-
-                            dialog.dismiss()
-                        }
-
-                        builder.setNegativeButton("Dismiss") { dialog, which ->
-                            dialog.dismiss()
-                        }
-                        builder.show()
-                    }
-                }
-            })
-
-            bottomNavigationView.menu.findItem(R.id.cart1).isChecked = true
-            newTransaction(Cart())
+        builder = AlertDialog.Builder(this)
+        builder.setTitle("Barcode Scan")
+        builder.setMessage("Data not found, please add the item first at list")
+        //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
+        builder.setPositiveButton("Add Item") { dialog, which ->
+            bottomNavigationView.menu.findItem(R.id.list1).isChecked = true
+            newTransaction(List())
+            dialog.dismiss()
         }
 
+        builder.setNegativeButton("Dismiss") { dialog, which ->
+            dialog.dismiss()
+        }
+        scan.setOnClickListener {
+            run {
+                IntentIntegrator(this).initiateScan()
+            }
+            //                onScanClick = true
+        }
+
+//        if (onScanClick) {
+//            Log.d("scan", "onCreate: scan $scannedResult")
+//            onScanClick = false
+//        }
+
+
         var openNotif = intent.getBooleanExtra(EXTRA_NOTIF, false)
-        if(openNotif) {
+        if (openNotif) {
             bottomNavigationView.menu.findItem(R.id.list1).isChecked = true
             newTransaction(List())
         }
         var reload = intent.getBooleanExtra(EXTRA_RELOAD, false)
-        if(reload){
+        if (reload) {
             bottomNavigationView.menu.findItem(R.id.list1).isChecked = true
             newTransaction(List())
         }
     }
 
+    private fun onScan(){
+        Log.d("scan", "onCreate: scan $scannedResult")
+        exist = false
+        vm.getAllData().observe(this, Observer {
+            Log.d("scan", "onCreate: $it")
+            for (i in it) {
+                Log.d("scan", "onCreate: $i")
+                Log.d("scan", "onCreate: scan $scannedResult")
+                if (i.BarcodeID == scannedResult) {
+                    Log.d("scan", "onCreate: bar ${i.BarcodeID}")
+                    exist = true
+                }
+            }
+            if (!exist) {
+                builder.show()
+            }
+        })
+
+        bottomNavigationView.menu.findItem(R.id.cart1).isChecked = true
+        newTransaction(Cart())
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-        if(result != null){
-
-            if(result.contents != null){
+        var result: IntentResult? =
+            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        Log.d("scan", "onActivityResult: res $result")
+        if (result != null) {
+            if (result.contents != null) {
                 scannedResult = result.contents
                 EXTRA_SCAN = scannedResult
+                onScan()
+                Log.d("scan", "onActivityResult: $scannedResult")
             } else {
                 EXTRA_SCAN = "scan failed"
             }
