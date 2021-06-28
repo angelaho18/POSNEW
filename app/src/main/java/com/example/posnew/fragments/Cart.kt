@@ -76,7 +76,7 @@ class Cart : Fragment() {
             }
         }
 
-        cartAdapter = CartAdapter(cartData)
+        cartAdapter = CartAdapter(view.context, cartData)
         RecyclerViewCart.adapter = cartAdapter
         RecyclerViewCart.layoutManager= LinearLayoutManager(context)
 
