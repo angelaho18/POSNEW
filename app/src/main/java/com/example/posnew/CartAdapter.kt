@@ -74,4 +74,12 @@ class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.
         var imageUri = Uri.parse(data.GambarProduk)
         Picasso.get().load(imageUri).into(holder.GambarProduk)
     }
+
+    private fun grandTotal(){
+        var totalprice = 0
+        for (i in myData){
+            totalprice += i.Harga
+        }
+        EXTRA_SUM = totalprice
+    }
 }
