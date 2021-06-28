@@ -11,6 +11,8 @@ const val EXTRA_STOK = "EXTRA_STOCK"
 const val EXTRA_DATA = "EXTRA_DATA"
 const val EXTRA_RELOAD = "RELOAD"
 const val EXTRA_ITEM = "ITEM"
+const val EXTRA_CART = "CART"
+const val TEMPT_CART = "TEMP_CART"
 var EXTRA_SCAN = "HASIL SCAN"
 var EXTRA_SUM = 0
 

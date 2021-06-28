@@ -1,6 +1,7 @@
 package com.example.posnew
 
 import android.media.Image
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
-class CartAdapter(data : MutableList<CartItem>): RecyclerView.Adapter<CartAdapter.myHolder>() {
+class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.myHolder>() {
     private var myData = data
     class myHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val GambarProduk = itemView.findViewById<ImageView>(R.id.GambarProduk)
@@ -34,23 +35,24 @@ class CartAdapter(data : MutableList<CartItem>): RecyclerView.Adapter<CartAdapte
 
     override fun onBindViewHolder(holder: myHolder, position: Int) {
 
-        var count = myData.get(position).JumlahProduk
+        val data = myData[position]
+        var count = data.JumlahProduk
 
         holder.tambah.setOnClickListener{
-            count = count + 1
-            holder.jumlahProduk.setText(""+count)
-            holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
+            count += 1
+            holder.jumlahProduk.text = ""+count
+            holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
         }
 
         holder.kurang.setOnClickListener{
             if(count == 1){
-                holder.jumlahProduk.setText("1")
-                holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
+                holder.jumlahProduk.text = "1"
+                holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
             }
             else{
                 count -= 1
-                holder.jumlahProduk.setText(""+count)
-                holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
+                holder.jumlahProduk.text = ""+count
+                holder.Harga.setText(data.Harga.toString().toInt()*count)
             }
         }
 
@@ -61,9 +63,11 @@ class CartAdapter(data : MutableList<CartItem>): RecyclerView.Adapter<CartAdapte
             notifyItemRangeChanged(newPosition, myData.size);
         }
 
-        holder.NamaProduk.setText(myData.get(position).NamaProduk)
-        holder.Harga.setText((myData.get(position).Harga.toString().toInt()*count).toString())
-        holder.Jumlah.setText(myData.get(position).JumlahProduk.toString())
-        Picasso.get().load(myData.get(position).GambarProduk).into(holder.GambarProduk)
+        holder.NamaProduk.text = data.NamaProduk
+        holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
+        holder.Jumlah.text = data.JumlahProduk.toString()
+
+        var imageUri = Uri.parse(data.GambarProduk)
+        Picasso.get().load(imageUri).into(holder.GambarProduk)
     }
 }

@@ -71,14 +71,7 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
             run {
                 IntentIntegrator(this).initiateScan()
             }
-            //                onScanClick = true
         }
-
-//        if (onScanClick) {
-//            Log.d("scan", "onCreate: scan $scannedResult")
-//            onScanClick = false
-//        }
-
 
         var openNotif = intent.getBooleanExtra(EXTRA_NOTIF, false)
         if (openNotif) {
@@ -90,9 +83,16 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
             bottomNavigationView.menu.findItem(R.id.list1).isChecked = true
             newTransaction(List())
         }
+        var openCart = intent.getBooleanExtra(EXTRA_CART, false)
+        Log.d("scan", "onCreate: cart $openCart")
+        if (openCart) {
+            bottomNavigationView.menu.findItem(R.id.cart1).isChecked = true
+            newTransaction(Cart())
+        }
     }
 
     private fun onScan(){
+        var item: CartItem? = null
         Log.d("scan", "onCreate: scan $scannedResult")
         exist = false
         vm.getAllData().observe(this, Observer {
@@ -102,16 +102,26 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
                 Log.d("scan", "onCreate: scan $scannedResult")
                 if (i.BarcodeID == scannedResult) {
                     Log.d("scan", "onCreate: bar ${i.BarcodeID}")
+                    item?.NamaProduk = i.ProductName
+                    item?.GambarProduk = i.ProductPic
+                    item?.Harga = i.Price
+                    item?.JumlahProduk = i.Quantity
                     exist = true
+                    return@Observer
                 }
+                if (exist) break
             }
             if (!exist) {
                 builder.show()
             }
         })
 
-        bottomNavigationView.menu.findItem(R.id.cart1).isChecked = true
-        newTransaction(Cart())
+        val cartIntent = Intent(this, ActivityFragment::class.java)
+        cartIntent.apply {
+            putExtra(EXTRA_CART, true)
+            putExtra(TEMPT_CART, item)
+        }
+        startActivity(cartIntent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -150,7 +160,7 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         outState?.putString("scannedResult", scannedResult)
-        super.onSaveInstanceState(outState, outPersistentState)
+//        super.onSaveInstanceState(outState, outPersistentState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {

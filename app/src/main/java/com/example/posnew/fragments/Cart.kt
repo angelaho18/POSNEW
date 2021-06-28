@@ -1,5 +1,6 @@
 package com.example.posnew.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.posnew.CartAdapter
 import com.example.posnew.CartItem
 import com.example.posnew.R
+import com.example.posnew.TEMPT_CART
 import kotlinx.android.synthetic.main.fragment_cart.*
 
 private const val ARG_PARAM1 = "param1"
@@ -21,6 +23,7 @@ class Cart : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var cartAdapter : CartAdapter
+    private lateinit var cartData: ArrayList<CartItem>
 //    private var ItemProduk : MutableList<CartItem> = mutableListOf(
 //        CartItem("Dress",200000,"https://i.ibb.co/wBYDxLq/beach.jpg",1),
 //        CartItem("Shirt",100000,"https://i.ibb.co/wBYDxLq/beach.jpg",1)
@@ -44,9 +47,12 @@ class Cart : Fragment() {
         val RecyclerViewCart = view.findViewById<RecyclerView>(R.id.RecyclerViewCart)
         var totalPrice = view.findViewById<TextView>(R.id.totalPrice)
 
-//        cartAdapter = CartAdapter(ItemProduk)
-//        RecyclerViewCart.adapter = cartAdapter
-//        RecyclerViewCart.layoutManager= LinearLayoutManager(context)
+        val item = requireActivity().intent.getParcelableExtra<CartItem>(TEMPT_CART)
+        cartData.add(item!!)
+
+        cartAdapter = CartAdapter(cartData)
+        RecyclerViewCart.adapter = cartAdapter
+        RecyclerViewCart.layoutManager= LinearLayoutManager(context)
 
 //        var totalHarga = 0
 //        for (i in 0 until ItemProduk.size){
