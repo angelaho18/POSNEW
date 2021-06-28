@@ -46,6 +46,7 @@ class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.
             count += 1
             holder.jumlahProduk.text = ""+count
             holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
+            grandTotal()
         }
 
         holder.kurang.setOnClickListener{
@@ -58,6 +59,7 @@ class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.
                 holder.jumlahProduk.text = ""+count
                 holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
             }
+            grandTotal()
         }
 
         holder.hapus.setOnClickListener {
@@ -65,6 +67,7 @@ class CartAdapter(data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.
             myData.removeAt(newPosition)
             notifyItemRemoved(newPosition);
             notifyItemRangeChanged(newPosition, myData.size);
+            grandTotal()
         }
 
         holder.NamaProduk.text = data.NamaProduk
