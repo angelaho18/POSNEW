@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed(
             {
                 //Intent Eksplisit
-                var homeIntent = Intent(this, ActivityFragment::class.java)
+                var homeIntent = Intent(this, Login::class.java)
                 startActivity(homeIntent)
                 Toast.makeText(this, "Welcome to KASIR KU", Toast.LENGTH_LONG).show()
                 finish()

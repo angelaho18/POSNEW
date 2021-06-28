@@ -18,6 +18,7 @@ import com.example.posnew.Login
 import com.example.posnew.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
+import org.jetbrains.anko.find
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -52,6 +53,13 @@ class Profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        val name = view.findViewById<EditText>(R.id.full_name)
+        val email = view.findViewById<EditText>(R.id.emailAddress)
+
+        name.setText("Lili Trilili")
+        email.setText("lili@mail.com")
+        email.isEnabled = false
 
         val btnPic = view.findViewById<Button>(R.id.buttonPic)
         btnPic.setOnClickListener {

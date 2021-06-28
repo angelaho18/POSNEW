@@ -133,11 +133,11 @@ class Register : AppCompatActivity(), regisviewInterface {
             .child(firebaseUser.uid)
             .setValue(hashMap)
             .addOnSuccessListener {
-                Toast.makeText(this, "SUCCESS", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Success to save to RTDB", Toast.LENGTH_SHORT).show()
                 Log.d("Firebase RealTime Database", "saveToRtDb: User berhasil dimasukkan")
             }
             .addOnFailureListener {
-                Toast.makeText(this, "FAILED", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Failed to save to RTDB", Toast.LENGTH_SHORT).show()
                 Log.d("Firebase RealTime Database", "saveToRtDb: User Gagal dimasukkan")
             }
     }

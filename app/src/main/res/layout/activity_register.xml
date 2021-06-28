@@ -61,7 +61,7 @@
                     android:layout_marginRight="33dp"
                     android:background="@drawable/login_regis_textview"
                     android:hint="FullName"
-                    android:inputType="text" />
+                    android:inputType="textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

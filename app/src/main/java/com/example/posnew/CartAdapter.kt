@@ -108,6 +108,12 @@ class CartAdapter(context: Context, data: ArrayList<CartItem>): RecyclerView.Ada
         return totalprice
     }
 
+    fun pay(){
+        myData.removeAll(myData)
+        cartSharedPref.edit().clear().apply()
+        notifyDataSetChanged()
+    }
+
     fun setOnItemClickListener(listener: OnItemsClickListener?) {
         this.listener = listener!!
     }

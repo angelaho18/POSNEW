@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
@@ -87,12 +88,10 @@ class Cart : Fragment() {
             }
         })
 
-//        var totalHarga = 0
-//        for (i in 0 until ItemProduk.size){
-//            totalHarga += (ItemProduk[i].Harga) * (ItemProduk[i].JumlahProduk)
-//        }
-//
-//        totalPrice.setText(totalHarga.toString())
+        val pay = view.findViewById<Button>(R.id.pay)
+        pay.setOnClickListener {
+            cartAdapter.pay()
+        }
 
         return view
     }

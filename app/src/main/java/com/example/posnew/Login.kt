@@ -1,5 +1,6 @@
 package com.example.posnew
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.media.AudioManager
 import android.media.SoundPool
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login.*
 
 class Login : AppCompatActivity() {
+    private lateinit var progressDialog: ProgressDialog
     private lateinit var auth: FirebaseAuth
     private lateinit var firebaseUser: FirebaseUser
     private var sp : SoundPool? = null
@@ -28,6 +30,7 @@ class Login : AppCompatActivity() {
 
         //init
         auth = FirebaseAuth.getInstance()
+        progressDialog = ProgressDialog(this)
 
         //intent eksplisit
         reg.setOnClickListener {
@@ -79,13 +82,20 @@ class Login : AppCompatActivity() {
         var email = logMail.text.toString()
         var pass = logPass.text.toString()
 
+        progressDialog.setMessage("Mohon Menunggu...")
+        progressDialog.setTitle("Registrasi")
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.show()
+
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
             if (it.isSuccessful) {
+                progressDialog.dismiss()
                 sendUserToActivity()
                 Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
             }
             else{
-                Toast.makeText(this, "Login Gagal ${it.exception}", Toast.LENGTH_SHORT).show()
+                progressDialog.dismiss()
+                Toast.makeText(this, "Login Gagal, Password atau Username Salah", Toast.LENGTH_SHORT).show()
             }
         }
     }
