@@ -77,12 +77,15 @@ class Cart : Fragment() {
         RecyclerViewCart.adapter = cartAdapter
         RecyclerViewCart.layoutManager= LinearLayoutManager(context)
 
-//        var total = 0
-//        for (i in cartData){
-//            total += i.Harga
-//        }
+        var total = hitTotal(cartData)
         val totalHarga  = view.findViewById<TextView>(R.id.totalPrice)
-        totalHarga.text = EXTRA_SUM.toString()
+        totalHarga.text = total.toString()
+
+        cartAdapter.setOnItemClickListener(object : CartAdapter.OnItemsClickListener {
+            override fun onItemClick(cartItem: CartItem) {
+                totalHarga.text = cartAdapter.grandTotal().toString()
+            }
+        })
 
 //        var totalHarga = 0
 //        for (i in 0 until ItemProduk.size){
@@ -92,6 +95,14 @@ class Cart : Fragment() {
 //        totalPrice.setText(totalHarga.toString())
 
         return view
+    }
+
+    private fun hitTotal(data: ArrayList<CartItem>): Int{
+        var total = 0
+        for (i in data){
+            total += i.Harga * i.JumlahProduk
+        }
+        return total
     }
 
     companion object {

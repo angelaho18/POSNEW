@@ -2,9 +2,7 @@ package com.example.posnew
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.media.Image
 import android.net.Uri
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +13,15 @@ import android.widget.TextView
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
-import java.lang.reflect.Type
 
-class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.myHolder>() {
+
+class CartAdapter(context: Context, data: ArrayList<CartItem>): RecyclerView.Adapter<CartAdapter.myHolder>() {
     private val context = context
     private var myData = data
     private val gson = Gson()
     private lateinit var cartSharedPref: SharedPreferences
+    private lateinit var listener: OnItemsClickListener
 
     class myHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val GambarProduk = itemView.findViewById<ImageView>(R.id.GambarProduk)
@@ -38,7 +36,7 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myHolder {
         val inflate = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_cart,parent,false)
+            .inflate(R.layout.item_cart, parent, false)
         return myHolder(inflate)
     }
 
@@ -56,6 +54,7 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
             data.JumlahProduk = holder.Jumlah.text.toString().toInt()
             sharedPref(myData)
             grandTotal()
+            if(listener != null) listener.onItemClick(data)
         }
 
         holder.kurang.setOnClickListener{
@@ -69,8 +68,10 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
                 holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
             }
             data.JumlahProduk = holder.Jumlah.text.toString().toInt()
+//            notifyItemChanged(position)
             sharedPref(myData)
             grandTotal()
+            if(listener != null) listener.onItemClick(data)
         }
 
         holder.hapus.setOnClickListener {
@@ -80,6 +81,7 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
             notifyItemRangeChanged(newPosition, myData.size);
             grandTotal()
             sharedPref(myData)
+            if(listener != null) listener.onItemClick(data)
         }
 
         holder.NamaProduk.text = data.NamaProduk
@@ -98,11 +100,19 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
         }
     }
 
-    private fun grandTotal(){
+    fun grandTotal(): Int{
         var totalprice = 0
         for (i in myData){
-            totalprice += i.Harga
+            totalprice += i.Harga * i.JumlahProduk
         }
-        EXTRA_SUM = totalprice
+        return totalprice
+    }
+
+    fun setOnItemClickListener(listener: OnItemsClickListener?) {
+        this.listener = listener!!
+    }
+
+    interface OnItemsClickListener {
+        fun onItemClick(cartItem: CartItem)
     }
 }
