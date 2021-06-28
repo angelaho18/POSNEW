@@ -1,20 +1,24 @@
 package com.example.posnew.fragments
 
-import android.content.Intent
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.posnew.CartAdapter
 import com.example.posnew.CartItem
+import com.example.posnew.PREF_NAME
 import com.example.posnew.R
-import com.example.posnew.TEMPT_CART
-import kotlinx.android.synthetic.main.fragment_cart.*
+import com.google.gson.Gson
+import java.io.File
+import java.io.FileWriter
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -23,7 +27,8 @@ class Cart : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var cartAdapter : CartAdapter
-    private lateinit var cartData: ArrayList<CartItem>
+    private lateinit var cartSharedPref: SharedPreferences
+    private var cartData = arrayListOf<CartItem>()
 //    private var ItemProduk : MutableList<CartItem> = mutableListOf(
 //        CartItem("Dress",200000,"https://i.ibb.co/wBYDxLq/beach.jpg",1),
 //        CartItem("Shirt",100000,"https://i.ibb.co/wBYDxLq/beach.jpg",1)
@@ -39,16 +44,29 @@ class Cart : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         //hasilScan.text= EXTRA_SCAN
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         val RecyclerViewCart = view.findViewById<RecyclerView>(R.id.RecyclerViewCart)
         var totalPrice = view.findViewById<TextView>(R.id.totalPrice)
 
-        val item = requireActivity().intent.getParcelableExtra<CartItem>(TEMPT_CART)
+//        val gson = Gson()
+//
+//        cartSharedPref = context?.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)!!
+//        var getJson = cartSharedPref.getString("cart", "")
+//        var obj = gson.fromJson(getJson, CartItem::class.java)
+//        cartData.addAll(obj)
+
+        var item = arguments?.getParcelable<CartItem>("item")
+        Log.d("cart", "onCreateView: $item")
         cartData.add(item!!)
+//        var jsonString = gson.toJson(cartData)
+//        cartSharedPref.edit {
+//            putString("cart", jsonString)
+//            apply()
+//        }
 
         cartAdapter = CartAdapter(cartData)
         RecyclerViewCart.adapter = cartAdapter
@@ -62,6 +80,22 @@ class Cart : Fragment() {
 //        totalPrice.setText(totalHarga.toString())
 
         return view
+    }
+
+    fun writeFileOnInternalStorage(context: Context, filename: String?, body: String?) {
+        val dir = File(context.filesDir, "CartItem")
+        if (!dir.exists()) {
+            dir.mkdir()
+        }
+        try {
+            val gpxfile = File(dir, filename)
+            val writer = FileWriter(gpxfile)
+            writer.append(body)
+            writer.flush()
+            writer.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     companion object {

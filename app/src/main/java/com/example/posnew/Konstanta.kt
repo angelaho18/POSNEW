@@ -16,7 +16,7 @@ const val TEMPT_CART = "TEMP_CART"
 var EXTRA_SCAN = "HASIL SCAN"
 var EXTRA_SUM = 0
 
-const val PREF_NAME = "ad-remove"
+const val PREF_NAME = "cart_item"
 
 var startService = true
 var count = 0

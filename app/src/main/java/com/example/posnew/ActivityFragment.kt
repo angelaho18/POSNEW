@@ -86,13 +86,16 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
         var openCart = intent.getBooleanExtra(EXTRA_CART, false)
         Log.d("scan", "onCreate: cart $openCart")
         if (openCart) {
+            var cartItem = intent.getParcelableExtra<CartItem>(TEMPT_CART)
+            Log.d("cart", "onCreate: $cartItem")
             bottomNavigationView.menu.findItem(R.id.cart1).isChecked = true
-            newTransaction(Cart())
+            addToCart(cartItem!!)
         }
     }
 
     private fun onScan(){
         var item: CartItem? = null
+        var listItem  = arrayOf<CartItem>()
         Log.d("scan", "onCreate: scan $scannedResult")
         exist = false
         vm.getAllData().observe(this, Observer {
@@ -102,12 +105,15 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
                 Log.d("scan", "onCreate: scan $scannedResult")
                 if (i.BarcodeID == scannedResult) {
                     Log.d("scan", "onCreate: bar ${i.BarcodeID}")
-                    item?.NamaProduk = i.ProductName
-                    item?.GambarProduk = i.ProductPic
-                    item?.Harga = i.Price
-                    item?.JumlahProduk = i.Quantity
+                    item = (CartItem(i.ProductName, i.ProductPic, i.Price, i.Quantity))
+                    Log.d("cart", "onScan: list $item")
                     exist = true
-                    return@Observer
+                    val cartIntent = Intent(this, ActivityFragment::class.java)
+                    cartIntent.apply {
+                        putExtra(EXTRA_CART, true)
+                        putExtra(TEMPT_CART, item)
+                    }
+                    startActivity(cartIntent)
                 }
                 if (exist) break
             }
@@ -115,13 +121,7 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
                 builder.show()
             }
         })
-
-        val cartIntent = Intent(this, ActivityFragment::class.java)
-        cartIntent.apply {
-            putExtra(EXTRA_CART, true)
-            putExtra(TEMPT_CART, item)
-        }
-        startActivity(cartIntent)
+        Log.d("cart", "onScan: $listItem")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -149,6 +149,15 @@ class ActivityFragment : AppCompatActivity(), InterfaceFragment {
         val listFragment = List()
         listFragment.arguments = bundle
         transaction.replace(R.id.fragmentContainer, listFragment).addToBackStack(null).commit()
+    }
+
+    private fun addToCart(cartItem: CartItem) {
+        val bundle = Bundle()
+        bundle.putParcelable("item", cartItem)
+        val transaction = this.supportFragmentManager.beginTransaction()
+        val cartFragment = Cart()
+        cartFragment.arguments = bundle
+        transaction.replace(R.id.fragmentContainer, cartFragment).addToBackStack(null).commit()
     }
 
     private fun newTransaction(fragment: Fragment) {
