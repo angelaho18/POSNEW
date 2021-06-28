@@ -55,6 +55,7 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
             holder.Harga.text = (data.Harga.toString().toInt()*count).toString()
             data.JumlahProduk = holder.Jumlah.text.toString().toInt()
             sharedPref(myData)
+            grandTotal()
         }
 
         holder.kurang.setOnClickListener{
@@ -69,6 +70,7 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
             }
             data.JumlahProduk = holder.Jumlah.text.toString().toInt()
             sharedPref(myData)
+            grandTotal()
         }
 
         holder.hapus.setOnClickListener {
@@ -76,6 +78,7 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
             myData.removeAt(newPosition)
             notifyItemRemoved(newPosition);
             notifyItemRangeChanged(newPosition, myData.size);
+            grandTotal()
             sharedPref(myData)
         }
 
@@ -93,5 +96,13 @@ class CartAdapter(context: Context, data : ArrayList<CartItem>): RecyclerView.Ad
             putString("cart", jsonString)
             apply()
         }
+    }
+
+    private fun grandTotal(){
+        var totalprice = 0
+        for (i in myData){
+            totalprice += i.Harga
+        }
+        EXTRA_SUM = totalprice
     }
 }

@@ -12,10 +12,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.posnew.CartAdapter
-import com.example.posnew.CartItem
-import com.example.posnew.PREF_NAME
-import com.example.posnew.R
+import com.example.posnew.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
@@ -80,12 +77,12 @@ class Cart : Fragment() {
         RecyclerViewCart.adapter = cartAdapter
         RecyclerViewCart.layoutManager= LinearLayoutManager(context)
 
-        var total = 0
-        for (i in cartData){
-            total += i.Harga
-        }
+//        var total = 0
+//        for (i in cartData){
+//            total += i.Harga
+//        }
         val totalHarga  = view.findViewById<TextView>(R.id.totalPrice)
-        totalHarga.text = total.toString()
+        totalHarga.text = EXTRA_SUM.toString()
 
 //        var totalHarga = 0
 //        for (i in 0 until ItemProduk.size){
