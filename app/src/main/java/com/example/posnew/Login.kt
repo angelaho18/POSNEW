@@ -83,7 +83,7 @@ class Login : AppCompatActivity() {
         var pass = logPass.text.toString()
 
         progressDialog.setMessage("Mohon Menunggu...")
-        progressDialog.setTitle("Registrasi")
+        progressDialog.setTitle("Login")
         progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
 
