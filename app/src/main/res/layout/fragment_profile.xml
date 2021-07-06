@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Profile"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/blue"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Profile"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="100dp"
+                    app:strokeColor="@color/blue"
+                    app:strokeWidth="2dp">
+
+                    <ImageView
+                        android:id="@+id/gambarProfile"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_person" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <android.widget.Button
+                    android:id="@+id/buttonPic"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="-51dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/button_camera"
+                    android:drawableRight="@drawable/ic_camera"
+                    android:paddingRight="12dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/full_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/border_profile"
+                        android:hint="Full Name"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="33dp"
+                        android:layout_marginRight="33dp"
+                        android:background="@drawable/border_profile"
+                        android:hint="Email Address"
+                        android:inputType="textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="horizontal"-->
+                <!--                    android:gravity="center">-->
+                <!--                    <android.widget.Button-->
+                <!--                        android:id="@+id/bt_save"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="Save"/>-->
+                <!--                    <android.widget.Button-->
+                <!--                        android:id="@+id/bt_reset"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="Reset"-->
+                <!--                        android:layout_marginLeft="30dp"/>-->
+                <!--                    <android.widget.Button-->
+                <!--                        android:id="@+id/bt_edit"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="Edit"-->
+                <!--                        android:layout_marginLeft="30dp"/>-->
+                <!--                </LinearLayout>-->
+
+
+            </LinearLayout>
+
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="vertical"-->
+            <!--                android:gravity="center">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="@string/battery_status"-->
+            <!--                    android:textSize="30sp"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:textColor="@color/blue"/>-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Charging State: "-->
+            <!--                    android:textSize="20sp"/>-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/status"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:textSize="22sp"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:layout_marginBottom="3dp" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Percentage: "-->
+            <!--                    android:textSize="20sp" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/percent"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:textSize="22sp"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:layout_marginBottom="3dp" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Temperature: "-->
+            <!--                    android:textSize="20sp" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/temp"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:textSize="22sp"-->
+            <!--                    android:textStyle="bold"-->
+            <!--                    android:layout_marginBottom="3dp" />-->
+            <!--            </LinearLayout>-->
+
+            <android.widget.Button
+                android:id="@+id/LogoutBut"
+                android:layout_width="200dp"
+                android:layout_height="39dp"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/button_profile"
+                android:text="Log Out"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:layout_marginBottom="100dp"/>
+        </LinearLayout>
+    </ScrollView>
+    <!--    <include layout ="@layout/navigation_button"/>-->
+
+</LinearLayout>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:text="Add Product"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="55dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Barang : "
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/inputName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="eg. Frisian Flag" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stok Barang : "
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/inputQty"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="eg. 10"
+            android:inputType="number"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Harga / Barang : "
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/inputPrice"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="eg. 10000"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gambar Barang : "
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/browse_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Browse Image"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/image_file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image.jpg/jpeg/png"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BarcodeID : "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/bt_AddID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Scan barcode ID"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp">
+
+            <android.widget.Button
+                android:id="@+id/bt_cancel"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@color/blue"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginRight="20dp"/>
+
+            <android.widget.Button
+                android:id="@+id/bt_add_to_conf"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@color/blue"
+                android:text="Add"
+                android:textColor="@color/white"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
